@@ -9,21 +9,41 @@
             background-color: red;
             position: absolute;
         }
-    </style>
+        .auto-style4 {
+            position: absolute;
+            left: 143px;
+            top: 84px;
+        }
+        .auto-style5 {
+            position: absolute;
+            left: 98px;
+            top: 87px;
+            width: 40px;
+            right: 262px;
+        }
+        </style>
 
     <main>
         <section class="row" aria-labelledby="aspnetTitle">
-            <h1 id="aspnetTitle">GAME
+            <h1 id="aspnetTitle">Game
             </h1>
         </section>
             <div style="display: flex;">
-                <div id="moveArea" style="width: 500px; height: 300px; background-color: lightgray; position: relative; border: 2px solid #000;">
+                <div id="moveArea" class="outer" style="width: 500px; height: 300px; background-color: lightgray; position: relative; border: 2px solid #000;">
                     <!-- 可移動的方塊 -->
                     <div id="moveBox" style="width: 10px; height: 10px; background-color: black; position: absolute; display: none;">
                     </div>
+                    <!--<div id = "GG" class="auto-style6" style="color: white; background-color: black; display:none">
+                        Game Over
+                    </div>-->
                     <asp:Button ID="Button1" runat="server" Height="48px" OnClick="Button1_Click" Text="開始" style="margin-left: 190px; margin-top: 80px;" Width="92px"/>
                     <asp:Label ID="Label1" runat="server" Text="Label" style="position: absolute; top: -1px; right: 0; width: 48px; height: 29px;"></asp:Label>
                     <asp:Button ID="Button2" runat="server" Height="48px" OnClick="Button2_Click" Text="排行榜" style="margin-left: 190px; margin-top: 10px;" Width="92px"/>
+                    <div id="RecordArea" class="inner" style="width: 400px; height: 200px; background-color: lightgray; position: absolute;top: 50%; left: 50%; transform: translate(-50%, -50%); border: 2px solid #000; display:none; z-index:1000">
+                        <label id="nameLabel" type="text" style="display: block; " class="auto-style5">暱稱</label>
+                        <asp:TextBox runat="server" id="TextBox1" type="text" style="display: block; " class="auto-style4" />
+                        <asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Text="送出" style="margin-left: 320px; margin-top: 140px;"/>
+                    </div>
                 </div>
                 <div style="width: 100px; height: 300px; margin-left: 10px;">
                            <asp:Button ID="Button3" runat="server" Height="48px" OnClick="Button3_Click" Text="離開" style="margin-left: 0px; margin-top: 250px;" Width="92px"/>
@@ -140,6 +160,32 @@
                         box.element.style.top = `${box.y}px`;
                     });
                 }
+                function sendToBackend() {
+                    // 獲取Label1的值
+                    var labelValue = document.getElementById('<%= Label1.ClientID %>').innerText;
+
+                    // 使用AJAX發送數據到後端
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "Default.aspx/SendLabelDataToBackend", true);
+                    xhr.withCredentials = true;
+                    xhr.setRequestHeader('Content-type', 'application/json');
+                    // 傳送JSON格式的數據
+
+                    //xhr.onload = function () {
+                    //    if (xhr.status === 200) {
+                    //        // 解析後端的 JSON 回應
+                    //        var response = JSON.parse(xhr.responseText);
+                    //        // 回應中的 d 屬性包含 WebMethod 回傳的資料
+                    //        console.log("後端回應:", response.d);
+                    //        alert("後端回應: " + response.d);
+                    //    } else {
+                    //        console.error("錯誤: 無法取得回應，狀態碼:", xhr.status);
+                    //    }
+                    //};
+
+
+                    xhr.send(JSON.stringify({ labelValue: labelValue }));
+                }
                 function CheckIsAlive() {
                     var moveBox = document.getElementById("moveBox");
                     var mvLeft = parseInt(moveBox.style.left);
@@ -159,6 +205,11 @@
                                 keysPressed["ArrowDown"] = false;
                                 keysPressed["ArrowLeft"] = false;
                                 keysPressed["ArrowRight"] = false;
+                                //document.getElementById('GG').style.display = 'block';
+                                setTimeout(function () {
+                                    document.getElementById('RecordArea').style.display = 'block';
+                                }, 1000);
+                                sendToBackend();
                             }
                         }
                     });
@@ -169,19 +220,6 @@
                 }
                 function handleKeyUp(event) {
                     keysPressed[event.key] = false; // 記錄按下的按鍵
-                }
-                function sendToBackend() {
-                    // 獲取Label1的值
-                    var labelValue = document.getElementById('<%= Label1.ClientID %>').innerText;
-
-                    // 使用AJAX發送數據到後端
-                    var xhr = new XMLHttpRequest();
-                    xhr.open("POST", "Default.aspx/SendLabelDataToBackend", true);
-                    xhr.withCredentials = true;
-                    xhr.setRequestHeader('Content-type', 'application/json');
-                    // 傳送JSON格式的數據
-
-                    xhr.send(JSON.stringify({ labelValue: labelValue }));
                 }
             </script>
     </main>

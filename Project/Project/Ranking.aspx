@@ -13,6 +13,7 @@
             height: 453px;
             margin-top: 5px;
             margin-bottom: 0px;
+            overflow: auto;
         }
         .auto-style2 {
             position: relative;
@@ -44,7 +45,7 @@
             
        </div>
        <div id="rankingArea" class="auto-style1">
-            <asp:GridView ID="GridView1" runat="server" Height="16px" style="font-size: medium; margin-bottom: 321px;" Width="200px" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="3" AutoGenerateColumns="false" CssClass="myGridView">
+            <asp:GridView ID="GridView1" runat="server" style="font-size: medium; margin-bottom: 321px;" Width="200px" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="3" AutoGenerateColumns="false" CssClass="myGridView">
                 <Columns>
                     <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name">
                         <HeaderStyle Width="100px" Height="20px" HorizontalAlign="Left" />
@@ -79,7 +80,7 @@
                     var grid = document.getElementById('<%= GridView1.ClientID %>');
                     grid.style.height = 'auto';
                     grid.style.maxHeight = '200px';
-                    grid.style.overflowY = 'auto';
+                    grid.style.overflow = 'auto';
                 };
 
                 var password;

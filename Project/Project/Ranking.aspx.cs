@@ -20,7 +20,7 @@ namespace Project
             using (SqlConnection cn = new SqlConnection())
             {
                 cn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; " +
-                    "AttachDbFilename = C:\\Users\\hotin\\Desktop\\C#期末專題\\Project\\Project\\App_Data\\Ranking.mdf;" +
+                    "AttachDbFilename = C:\\Users\\hotin\\Desktop\\C-Sharp-Project\\Project\\Project\\App_Data\\Ranking.mdf;" +
                     "Integrated Security=True;";
                 cn.Open();
                 string mycmd = "SELECT * FROM Level1 ORDER BY CAST(Score AS FLOAT) DESC";
@@ -48,7 +48,7 @@ namespace Project
                 using (SqlConnection cn = new SqlConnection())
                 {
                     cn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; " +
-                        "AttachDbFilename = C:\\Users\\hotin\\Desktop\\C#期末專題\\Project\\Project\\App_Data\\Ranking.mdf;" +
+                        "AttachDbFilename = C:\\Users\\hotin\\Desktop\\C-Sharp-Project\\Project\\Project\\App_Data\\Ranking.mdf;" +
                         "Integrated Security=True;";
                     cn.Open();
                     string mycmd = "DELETE FROM Level1";

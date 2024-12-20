@@ -64,7 +64,7 @@
                 var moveBox = document.getElementById("moveBox");
                 var moveArea = document.getElementById("moveArea");
 
-                var moveSpeed = 10;  // 移動速度
+                var moveSpeed = 5;  // 移動速度
                 var boxX = 250;
                 var boxY = 150;
 

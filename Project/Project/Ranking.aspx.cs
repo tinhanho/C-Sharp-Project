@@ -35,7 +35,6 @@ namespace Project
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            _Default.myctrl = true;
             Response.Redirect("Default");
         }
 

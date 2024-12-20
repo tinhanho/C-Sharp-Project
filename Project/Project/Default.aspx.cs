@@ -17,22 +17,17 @@ namespace Project
 {
     public partial class _Default : Page
     {
-        public static bool myctrl = true;
         static string playerScore = "";
         static string nickname = "";
         static bool dropWitoutNickName = false;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (myctrl) 
-            {
 
-                Label1.Visible = false;
-                Button1.Visible = true;
-                Button2.Visible = true;
-                Button3.Visible = false;
-            }
-            myctrl = false;
+            Label1.Visible = false;
+            Button1.Visible = true;
+            Button2.Visible = true;
+            Button3.Visible = false;
         }
 
         protected void Button1_Click(object sender, EventArgs e)
@@ -64,7 +59,6 @@ namespace Project
         }
         protected void Button3_Click(object sender, EventArgs e)
         {
-            myctrl = true;
             dropWitoutNickName = true;
             Page_Load(sender, e);
         }
@@ -80,7 +74,6 @@ namespace Project
         //Nickname sending button
         protected void Button4_Click(object sender, EventArgs e)
         {
-            myctrl = true;
             nickname = TextBox1.Text;
             Debug.WriteLine(TextBox1.Text);
             Page_Load(sender, e);

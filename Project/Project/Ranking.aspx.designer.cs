@@ -7,12 +7,10 @@
 // </自動產生>
 //------------------------------------------------------------------------------
 
-namespace Project
-{
+namespace Project {
 
 
-    public partial class Contact
-    {
+    public partial class Contact {
 
         /// <summary>
         /// Button1 控制項。
@@ -31,5 +29,14 @@ namespace Project
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GridView1;
+
+        /// <summary>
+        /// GridView2 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridView2;
     }
 }

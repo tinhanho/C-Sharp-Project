@@ -23,13 +23,21 @@ namespace Project
                     "AttachDbFilename = C:\\Users\\hotin\\Desktop\\C-Sharp-Project\\Project\\Project\\App_Data\\Ranking.mdf;" +
                     "Integrated Security=True;";
                 cn.Open();
-                string mycmd = "SELECT * FROM Level1 ORDER BY CAST(Score AS FLOAT) DESC";
+                string mycmd = "SELECT * FROM Game1 ORDER BY CAST(Score AS FLOAT) DESC";
+                string mycmd2 = "SELECT * FROM Game2 ORDER BY CAST(Score AS FLOAT) ASC";
                 SqlCommand cmd = new SqlCommand(mycmd, cn);
                 SqlDataReader dr= cmd.ExecuteReader();
 
                 GridView1.DataSource = dr;
                 GridView1.DataBind();
                 dr.Close();
+
+                SqlCommand cmd2 = new SqlCommand(mycmd2, cn);
+                SqlDataReader dr2 = cmd2.ExecuteReader();
+                GridView2.DataSource = dr2;
+                GridView2.DataBind();
+ 
+                dr2.Close();
             }
         }
 
@@ -39,10 +47,10 @@ namespace Project
         }
 
         [WebMethod(EnableSession = true)]
-        public static string SendLabelDataToBackend(string password)
+        public static string SendLabelDataToBackend(string password, string GameValue)
         {
             Debug.Write(password);
-            if (password == "70317031")
+            if (password == "70317031" && GameValue == "1")
             {
                 using (SqlConnection cn = new SqlConnection())
                 {
@@ -50,7 +58,21 @@ namespace Project
                         "AttachDbFilename = C:\\Users\\hotin\\Desktop\\C-Sharp-Project\\Project\\Project\\App_Data\\Ranking.mdf;" +
                         "Integrated Security=True;";
                     cn.Open();
-                    string mycmd = "DELETE FROM Level1";
+                    string mycmd = "DELETE FROM Game1";
+                    SqlCommand cmd = new SqlCommand(mycmd, cn);
+                    cmd.ExecuteNonQuery();
+                }
+                return "response succesful";
+            }
+            else if (password == "70317031" && GameValue == "2")
+            {
+                using (SqlConnection cn = new SqlConnection())
+                {
+                    cn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; " +
+                        "AttachDbFilename = C:\\Users\\hotin\\Desktop\\C-Sharp-Project\\Project\\Project\\App_Data\\Ranking.mdf;" +
+                        "Integrated Security=True;";
+                    cn.Open();
+                    string mycmd = "DELETE FROM Game2";
                     SqlCommand cmd = new SqlCommand(mycmd, cn);
                     cmd.ExecuteNonQuery();
                 }

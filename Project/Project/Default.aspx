@@ -29,24 +29,27 @@
             </h1>
         </section>
             <div style="display: flex;">
-                <div id="moveArea" class="outer" style="width: 500px; height: 300px; background-color: lightgray; position: relative; border: 2px solid #000;">
+                <div id="moveArea" class="outer" style= "margin-top:10px; width: 500px; height: 300px; background-color: lightgray; position: relative; border: 2px solid #000;">
                     <!-- 可移動的方塊 -->
                     <div id="moveBox" style="width: 10px; height: 10px; background-color: black; position: absolute; display: none;">
                     </div>
                     <!--<div id = "GG" class="auto-style6" style="color: white; background-color: black; display:none">
                         Game Over
                     </div>-->
-                    <asp:Button ID="Button1" runat="server" Height="48px" OnClick="Button1_Click" Text="開始" style="margin-left: 190px; margin-top: 80px;" Width="92px"/>
+                    <asp:Button ID="Button6" runat="server" OnClick="Button6_Click" Text="遊戲2" style="position:absolute; top: 130px; left: 300px; width: 99px; height: 47px;" />
+                    <asp:Button ID="Button1" runat="server" Height="48px" OnClick="Button1_Click" Text="開始" style="margin-left: 190px; margin-top: 70px;" Width="92px"/>
                     <asp:Label ID="Label1" runat="server" Text="Label" style="position: absolute; top: -1px; right: 0; width: 48px; height: 29px;"></asp:Label>
+                    <asp:Button ID="Button5" runat="server" OnClick="Button5_Click" Text="遊戲1" style="position:absolute; top: 130px; left: 80px; width: 99px; height: 47px;" />
                     <asp:Button ID="Button2" runat="server" Height="48px" OnClick="Button2_Click" Text="排行榜" style="margin-left: 190px; margin-top: 10px;" Width="92px"/>
                     <div id="RecordArea" class="inner" style="width: 400px; height: 200px; background-color: lightgray; position: absolute;top: 50%; left: 50%; transform: translate(-50%, -50%); border: 2px solid #000; display:none; z-index:1000">
                         <label id="nameLabel" type="text" style="display: block; " class="auto-style5">暱稱</label>
                         <asp:TextBox runat="server" id="TextBox1" type="text" style="display: block; " class="auto-style4" />
                         <asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Text="送出" style="margin-left: 320px; margin-top: 140px;"/>
                     </div>
+                    <asp:Button ID="Button7" runat="server" Height="48px" OnClick="Button7_Click" Text="說明" style="margin-left: 190px; margin-top: 10px;" Width="92px"/>
                 </div>
                 <div style="width: 100px; height: 300px; margin-left: 10px;">
-                           <asp:Button ID="Button3" runat="server" Height="48px" OnClick="Button3_Click" Text="離開" style="margin-left: 0px; margin-top: 250px;" Width="92px"/>
+                           <asp:Button ID="Button3" runat="server" Height="48px" OnClick="Button3_Click" Text="離開" style="margin-left: 0px; margin-top: 260px;" Width="92px"/>
                 </div>
             </div>
     
@@ -116,6 +119,7 @@
                 const redBoxes = [];
                 var s1, s2, s3, s4;
                 let alive = 1;
+                var GameValue;
 
                 function generateRedBox() {
                     gRB = 1;
@@ -160,7 +164,7 @@
                         box.element.style.top = `${box.y}px`;
                     });
                 }
-                function sendToBackend() {
+                function sendToBackend(GameValue) {
                     // 獲取Label1的值
                     var labelValue = document.getElementById('<%= Label1.ClientID %>').innerText;
 
@@ -184,7 +188,8 @@
                     //};
 
 
-                    xhr.send(JSON.stringify({ labelValue: labelValue }));
+                    if (GameValue === 1) xhr.send(JSON.stringify({ labelValue: labelValue, Game: 1 }));
+                    else if(GameValue === 2) xhr.send(JSON.stringify({ labelValue: labelValue, Game: 2 }));
                 }
                 function CheckIsAlive() {
                     var moveBox = document.getElementById("moveBox");
@@ -209,12 +214,26 @@
                                 setTimeout(function () {
                                     document.getElementById('RecordArea').style.display = 'block';
                                 }, 1000);
-                                sendToBackend();
+                                document.getElementById('<%= Button4.ClientID %>').addEventListener('click', function () {
+                                    sendToBackend(1);
+                                });
                             }
                         }
                     });
                 }
-
+                function CheckAllRedBoxIsClicked() {
+                    const remainingBoxes = document.querySelectorAll('.red-box'); // 獲取仍然存在的紅色方塊
+                    if (remainingBoxes.length === 0) {
+                        clearInterval(s3);
+                        clearInterval(s4);
+                        setTimeout(function () {
+                            document.getElementById('RecordArea').style.display = 'block';
+                        }, 1000);
+                        document.getElementById('<%= Button4.ClientID %>').addEventListener('click', function () {
+                            sendToBackend(2);
+                        });
+                    }
+                }
                 function handleKeydown(event) {
                     keysPressed[event.key] = true; // 記錄按下的按鍵
                 }

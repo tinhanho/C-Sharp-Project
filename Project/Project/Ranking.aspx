@@ -135,7 +135,7 @@
                     sendToBackend();
                 }
 
-                function sendToBackend(GameValue) {
+                function sendToBackend() {
                     // 使用AJAX發送數據到後端
                     var xhr = new XMLHttpRequest();
                     xhr.open("POST", "Ranking.aspx/SendLabelDataToBackend", true);

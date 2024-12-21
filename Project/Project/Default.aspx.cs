@@ -26,7 +26,13 @@ namespace Project
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            using (SqlConnection cn = new SqlConnection())
+            {
+                cn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; " +
+                    "AttachDbFilename = C:\\Users\\hotin\\Desktop\\C-Sharp-Project\\Project\\Project\\App_Data\\Ranking.mdf;" +
+                    "Integrated Security=True;";
+                cn.Open(); 
+            }
             Label1.Visible = false;
             Button1.Visible = true;
             Button2.Visible = true;

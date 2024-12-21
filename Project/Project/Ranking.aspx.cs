@@ -50,6 +50,7 @@ namespace Project
         public static string SendLabelDataToBackend(string password, string GameValue)
         {
             Debug.Write(password);
+            Debug.Write(GameValue);
             if (password == "70317031" && GameValue == "1")
             {
                 using (SqlConnection cn = new SqlConnection())

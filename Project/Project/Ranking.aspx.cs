@@ -15,30 +15,29 @@ namespace Project
 {
     public partial class Contact : Page
     {
+        SqlConnection cn = new SqlConnection();
         protected void Page_Load(object sender, EventArgs e)
         {
-            using (SqlConnection cn = new SqlConnection())
-            {
-                cn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; " +
-                    "AttachDbFilename = C:\\Users\\hotin\\Desktop\\C-Sharp-Project\\Project\\Project\\App_Data\\Ranking.mdf;" +
-                    "Integrated Security=True;";
-                cn.Open();
-                string mycmd = "SELECT * FROM Game1 ORDER BY CAST(Score AS FLOAT) DESC";
-                string mycmd2 = "SELECT * FROM Game2 ORDER BY CAST(Score AS FLOAT) ASC";
-                SqlCommand cmd = new SqlCommand(mycmd, cn);
-                SqlDataReader dr= cmd.ExecuteReader();
 
-                GridView1.DataSource = dr;
-                GridView1.DataBind();
-                dr.Close();
+            cn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; " +
+                "AttachDbFilename = C:\\Users\\hotin\\Desktop\\C-Sharp-Project\\Project\\Project\\App_Data\\Ranking.mdf;" +
+                "Integrated Security=True;";
+            cn.Open();
+            string mycmd = "SELECT * FROM Game1 ORDER BY CAST(Score AS FLOAT) DESC";
+            string mycmd2 = "SELECT * FROM Game2 ORDER BY CAST(Score AS FLOAT) ASC";
+            SqlCommand cmd = new SqlCommand(mycmd, cn);
+            SqlDataReader dr= cmd.ExecuteReader();
 
-                SqlCommand cmd2 = new SqlCommand(mycmd2, cn);
-                SqlDataReader dr2 = cmd2.ExecuteReader();
-                GridView2.DataSource = dr2;
-                GridView2.DataBind();
+            GridView1.DataSource = dr;
+            GridView1.DataBind();
+            dr.Close();
+
+            SqlCommand cmd2 = new SqlCommand(mycmd2, cn);
+            SqlDataReader dr2 = cmd2.ExecuteReader();
+            GridView2.DataSource = dr2;
+            GridView2.DataBind();
  
-                dr2.Close();
-            }
+            dr2.Close();
         }
 
         protected void Button1_Click(object sender, EventArgs e)

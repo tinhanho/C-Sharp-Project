@@ -14,6 +14,7 @@ using System.Data.SqlClient;
 using Microsoft.Ajax.Utilities;
 using System.Xml.Linq;
 using System.Security.Cryptography;
+using System.Data;
 
 namespace Project
 {
@@ -23,16 +24,20 @@ namespace Project
         static string nickname = "";
         static bool dropWitoutNickName = false;
         static string GameValue = "";
+        static SqlConnection cn = new SqlConnection();
+        static bool mylock = true;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            using (SqlConnection cn = new SqlConnection())
-            {
+            try{
                 cn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; " +
-                    "AttachDbFilename = C:\\Users\\hotin\\Desktop\\C-Sharp-Project\\Project\\Project\\App_Data\\Ranking.mdf;" +
-                    "Integrated Security=True;";
-                cn.Open(); 
+                "AttachDbFilename = C:\\Users\\hotin\\Desktop\\C-Sharp-Project\\Project\\Project\\App_Data\\Ranking.mdf;" +
+                "Integrated Security=True;";
+                cn.Open();  
             }
+            catch{ 
+            }
+           
             Label1.Visible = false;
             Button1.Visible = true;
             Button2.Visible = true;
@@ -55,6 +60,7 @@ namespace Project
         //Ranking
         protected void Button2_Click(object sender, EventArgs e)
         {
+            cn.Close();
             Response.Redirect("Ranking");
         }
         protected void Button3_Click(object sender, EventArgs e)
@@ -69,8 +75,7 @@ namespace Project
         {
             playerScore = labelValue;
             GameValue = Game;
-            Debug.WriteLine(playerScore);
-            Debug.WriteLine(GameValue);
+            mylock = false;
 
             return "收到的數據是: " + labelValue;
         }
@@ -79,75 +84,68 @@ namespace Project
         protected void Button4_Click(object sender, EventArgs e)
         {
             nickname = TextBox1.Text;
-            Debug.WriteLine(TextBox1.Text);
-            Page_Load(sender, e);
+
+            while(mylock){ };
 
             if (!dropWitoutNickName && nickname!="")
             {
+                Debug.WriteLine(nickname);
+                Debug.WriteLine(playerScore);
                 if(GameValue=="1"){
-                    using (SqlConnection cn = new SqlConnection())
-                    {
-                        cn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; " +
-                            "AttachDbFilename = C:\\Users\\hotin\\Desktop\\C-Sharp-Project\\Project\\Project\\App_Data\\Ranking.mdf;" +
-                            "Integrated Security=True;";
-                        cn.Open();
-                        string mycmd = @"
-                            IF EXISTS (SELECT 1 FROM Game1 WHERE Name = @Name AND @Score > Score)
-                            BEGIN
-                                UPDATE Game1 SET Score = @Score WHERE Name = @Name;
-                            END
-                            ELSE
-                            BEGIN
-                                INSERT INTO Game1 (Name, Score) VALUES (@Name, @Score);
-                            END";
-                        SqlCommand cmd = new SqlCommand(mycmd, cn);
-                        cmd.Parameters.AddWithValue("@Name", nickname);
-                        cmd.Parameters.AddWithValue("@Score", playerScore);
-                        try
-                        {
-                            cmd.ExecuteNonQuery();
-                        }
-                        catch (Exception ex)
-                        {
-                            Debug.Write(ex.ToString());
-                        }
+                    string mycmd = @"
+                        IF EXISTS (SELECT 1 FROM Game1 WHERE Name = @Name AND @Score > Score)
+                        BEGIN
+                            UPDATE Game1 SET Score = @Score WHERE Name = @Name;
+                        END
+                        ELSE
+                        BEGIN
+                            INSERT INTO Game1 (Name, Score) VALUES (@Name, @Score);
+                        END";
+
+                    SqlCommand cmd = new SqlCommand(mycmd, cn);
+                    cmd.Parameters.AddWithValue("@Name", nickname);
+                    cmd.Parameters.AddWithValue("@Score", playerScore);
+
+
+                    try {
+                        cmd.ExecuteNonQuery();
                     }
+                    catch
+                    {
+                        Debug.Write("EXCEPTION");
+                    }
+                    
                 }
                 else if(GameValue=="2"){
-                   using (SqlConnection cn = new SqlConnection())
+                    string mycmd = @"
+                        IF EXISTS (SELECT 1 FROM Game2 WHERE Name = @Name AND @Score < Score)
+                        BEGIN
+                            UPDATE Game2 SET Score = @Score WHERE Name = @Name;
+                        END
+                        ELSE
+                        BEGIN
+                            INSERT INTO Game2 (Name, Score) VALUES (@Name, @Score);
+                        END";
+                    SqlCommand cmd = new SqlCommand(mycmd, cn);
+                    cmd.Parameters.AddWithValue("@Name", nickname);
+                    cmd.Parameters.AddWithValue("@Score", playerScore);
+                    try
                     {
-                        cn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; " +
-                            "AttachDbFilename = C:\\Users\\hotin\\Desktop\\C-Sharp-Project\\Project\\Project\\App_Data\\Ranking.mdf;" +
-                            "Integrated Security=True;";
-                        cn.Open();
-                        string mycmd = @"
-                            IF EXISTS (SELECT 1 FROM Game2 WHERE Name = @Name AND @Score < Score)
-                            BEGIN
-                                UPDATE Game2 SET Score = @Score WHERE Name = @Name;
-                            END
-                            ELSE
-                            BEGIN
-                                INSERT INTO Game2 (Name, Score) VALUES (@Name, @Score);
-                            END";
-                        SqlCommand cmd = new SqlCommand(mycmd, cn);
-                        cmd.Parameters.AddWithValue("@Name", nickname);
-                        cmd.Parameters.AddWithValue("@Score", playerScore);
-                        try
-                        {
-                            cmd.ExecuteNonQuery();
-                        }
-                        catch (Exception ex)
-                        {
-                            Debug.Write(ex.ToString());
-                        }
-                    }              
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch
+                    {
+                        Debug.Write("EXCEPTION");
+                    }        
                     
                 }
             }
+
             nickname = "";
             playerScore = "";
             dropWitoutNickName = false;
             Button7.Visible = true;
+            Page_Load(sender, e);
         }
         
         //遊戲1

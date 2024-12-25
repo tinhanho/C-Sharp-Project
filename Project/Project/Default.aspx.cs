@@ -15,6 +15,7 @@ using Microsoft.Ajax.Utilities;
 using System.Xml.Linq;
 using System.Security.Cryptography;
 using System.Data;
+using System.Web.Razor.Parser.SyntaxTree;
 
 namespace Project
 {
@@ -31,7 +32,7 @@ namespace Project
         {
             try{
                 cn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; " +
-                "AttachDbFilename = C:\\Users\\hotin\\Desktop\\C-Sharp-Project\\Project\\Project\\App_Data\\Ranking.mdf;" +
+                "AttachDbFilename = C:\\C-Sharp-Project\\Project\\Project\\App_Data\\Ranking.mdf;" +
                 "Integrated Security=True;";
                 cn.Open();  
             }
@@ -140,11 +141,12 @@ namespace Project
                     
                 }
             }
-
+            mylock = true;
             nickname = "";
             playerScore = "";
             dropWitoutNickName = false;
             Button7.Visible = true;
+
             Page_Load(sender, e);
         }
         

@@ -20,7 +20,7 @@ namespace Project
         {
 
             cn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; " +
-                "AttachDbFilename = C:\\Users\\hotin\\Desktop\\C-Sharp-Project\\Project\\Project\\App_Data\\Ranking.mdf;" +
+                "AttachDbFilename = C:\\C-Sharp-Project\\Project\\Project\\App_Data\\Ranking.mdf;" +
                 "Integrated Security=True;";
             cn.Open();
             string mycmd = "SELECT * FROM Game1 ORDER BY CAST(Score AS FLOAT) DESC";
@@ -46,16 +46,33 @@ namespace Project
         }
 
         [WebMethod(EnableSession = true)]
-        public static string SendLabelDataToBackend(string password, string GameValue)
+        public static string SendLabelDataToBackend(string password, string GameValue, string PlayerName)
         {
             Debug.Write(password);
             Debug.Write(GameValue);
-            if (password == "70317031" && GameValue == "1")
+
+            if (password == "70317031" && PlayerName != "")
             {
                 using (SqlConnection cn = new SqlConnection())
                 {
                     cn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; " +
-                        "AttachDbFilename = C:\\Users\\hotin\\Desktop\\C-Sharp-Project\\Project\\Project\\App_Data\\Ranking.mdf;" +
+                        "AttachDbFilename = C:\\C-Sharp-Project\\Project\\Project\\App_Data\\Ranking.mdf;" +
+                        "Integrated Security=True;";
+                    cn.Open();
+                    string mycmd = "DELETE FROM Game1 WHERE Name=@PlayerName";
+                    SqlCommand cmd = new SqlCommand(mycmd, cn);
+                    cmd.Parameters.AddWithValue("@PlayerName", PlayerName);
+                    cmd.ExecuteNonQuery();
+                }
+                return "response succesful";
+            }
+            
+            else if (password == "70317031" && GameValue == "1")
+            {
+                using (SqlConnection cn = new SqlConnection())
+                {
+                    cn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; " +
+                        "AttachDbFilename = C:\\C-Sharp-Project\\Project\\Project\\App_Data\\Ranking.mdf;" +
                         "Integrated Security=True;";
                     cn.Open();
                     string mycmd = "DELETE FROM Game1";
@@ -69,7 +86,7 @@ namespace Project
                 using (SqlConnection cn = new SqlConnection())
                 {
                     cn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; " +
-                        "AttachDbFilename = C:\\Users\\hotin\\Desktop\\C-Sharp-Project\\Project\\Project\\App_Data\\Ranking.mdf;" +
+                        "AttachDbFilename = C:\\C-Sharp-Project\\Project\\Project\\App_Data\\Ranking.mdf;" +
                         "Integrated Security=True;";
                     cn.Open();
                     string mycmd = "DELETE FROM Game2";
@@ -79,6 +96,11 @@ namespace Project
                 return "response succesful";
             }
             else return "response wrong password";
+        }
+
+        protected void Login1_Authenticate()
+        {
+
         }
     }
 }

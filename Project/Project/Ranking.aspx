@@ -9,7 +9,7 @@
             position: relative;
             left: 8px;
             top: -14px;
-            width: 245px;
+            width: 250px;
             height: 453px;
             margin-top: 5px;
             margin-bottom: 0px;
@@ -20,7 +20,7 @@
             left: 10px;
             top: 5px;
             width: 166px;
-            height: 59px;
+            height: 50px;
             margin-top: 5px;
             margin-bottom: 0px;
             overflow: auto;
@@ -35,9 +35,17 @@
             width: 390px;
             overflow: auto;
         }
+        .custom-button {
+            background: none;      /* 移除背景 */
+            border: none;          /* 移除邊框 */
+            color: blue;           /* 設置文字為藍色 */
+            text-decoration: underline; /* 增加底線 */
+            cursor: pointer;       /* 設置鼠標樣式 */
+            padding: 0;            /* 去除多餘的內邊距 */
+        }
         .parent-area{
             display: flex;       /* 設置父元素為 flex 容器，讓子元素並排 */
-            gap: 10px;           /* 子元素間的間距（可選） */
+            gap: 50px;           /* 子元素間的間距（可選） */
             overflow: auto;
         }
     </style>
@@ -46,11 +54,19 @@
         <h2 id="title"><%: Title %>
         
         </h2>
-        <div id="buttonArea" class="auto-style2">
+       <div class = "parent-area" style="overflow:hidden">
+            <div id="buttonArea" class="auto-style2">
             
-            <asp:Button ID="Button1" runat="server" Height="34px" Text="回到首頁" Width="129px" OnClick="Button1_Click" />
-            
+                <asp:Button ID="Button1" runat="server" Text="回到首頁" Width="129px" OnClick="Button1_Click" />
+      
+           </div>      
+           <!--
+            <div id="buttonArea2" class="auto-style2"  style="margin-left:1000px">
+                <asp:Button ID="Button2" runat="server" CssClass="custom-button" Text="登入"/>
+            </div>
+            -->
        </div>
+
        <div class = "parent-area" >
            <div id="rankingArea" class="auto-style1">
                <div style="position:relative; margin-top: 10px; margin-left: 10px">
@@ -104,6 +120,7 @@
                     <SortedDescendingHeaderStyle BackColor="#00547E" />
                 </asp:GridView>
            </div>
+           
         </div>
         <div id="passwordInput" style="display:none" class="auto-style3">
             <label for="passwordField">請輸入密碼：</label>
@@ -126,16 +143,25 @@
 
                 var password;
                 var GameValue;
+                var PlayerName;
+                var CommandVal;
                 function login_to_delete(Game) {
                     document.getElementById('passwordInput').style.display = 'block';
                     GameValue = Game;
+                    CommandVal = 1;
+                }
+                function login_to_delete_Player(Game, Name) {
+                    document.getElementById('passwordInput').style.display = 'block';
+                    GameValue = Game;
+                    PlayerName = Name;
+                    CommandVal = 2;
                 }
                 function storePassword() {
                     password = document.getElementById('passwordField').value;
-                    sendToBackend();
+                    sendToBackend(CommandVal);
                 }
 
-                function sendToBackend() {
+                function sendToBackend(command) {
                     // 使用AJAX發送數據到後端
                     var xhr = new XMLHttpRequest();
                     xhr.open("POST", "Ranking.aspx/SendLabelDataToBackend", true);
@@ -168,7 +194,8 @@
                             console.error("錯誤: 無法取得回應，狀態碼:", xhr.status);
                         }
                     };
-                    xhr.send(JSON.stringify({ password: password, GameValue: GameValue }));
+                    if (command === 1) xhr.send(JSON.stringify({ password: password, GameValue: GameValue, PlayerName: ""}));
+                    else if (command === 2) xhr.send(JSON.stringify({ password: password, GameValue: GameValue, PlayerName: PlayerName }));
                 }
             </script>
 

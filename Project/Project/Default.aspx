@@ -43,8 +43,8 @@
                     <asp:Button ID="Button2" runat="server" Height="48px" OnClick="Button2_Click" Text="排行榜" style="margin-left: 190px; margin-top: 10px;" Width="92px"/>
                     <div id="RecordArea" class="inner" style="width: 400px; height: 200px; background-color: lightgray; position: absolute;top: 50%; left: 50%; transform: translate(-50%, -50%); border: 2px solid #000; display:none; z-index:1000">
                         <label id="nameLabel" type="text" style="display: block; " class="auto-style5">暱稱</label>
-                        <asp:TextBox runat="server" id="TextBox1" type="text" style="display: block; " class="auto-style4" />
-                        <asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Text="送出" style="margin-left: 320px; margin-top: 140px;"/>
+                        <asp:TextBox runat="server" id="TextBox1" type="text" MaxLength="10" style="display: block; " class="auto-style4" />
+                        <asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Text="送出" IsDefault="True" style="margin-left: 320px; margin-top: 140px;"/>
                     </div>
                     <asp:Button ID="Button7" runat="server" Height="48px" OnClick="Button7_Click" Text="說明" style="margin-left: 190px; margin-top: 10px;" Width="92px"/>
                 </div>
@@ -213,6 +213,7 @@
                                 //document.getElementById('GG').style.display = 'block';
                                 setTimeout(function () {
                                     document.getElementById('RecordArea').style.display = 'block';
+                                    document.getElementById('RecordArea').focus();
                                 }, 1000);
                                 document.getElementById('<%= Button4.ClientID %>').addEventListener('click', function () {
                                     sendToBackend(1);

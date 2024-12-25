@@ -35,6 +35,15 @@
             width: 390px;
             overflow: auto;
         }
+        .auto-style4 {
+            position: relative;
+            left: 8px;
+            top: 0px;
+            width: 200px;
+            height: 453px;
+            margin-top: 0px;
+            margin-bottom: 0px;
+        }
         .custom-button {
             background: none;      /* 移除背景 */
             border: none;          /* 移除邊框 */
@@ -47,6 +56,18 @@
             display: flex;       /* 設置父元素為 flex 容器，讓子元素並排 */
             gap: 50px;           /* 子元素間的間距（可選） */
             overflow: auto;
+        }
+        .rounded-box {
+            margin-top: 50px;
+            border: 2px solid #000;  /* 邊框顏色 */
+            border-radius: 15px;      /* 圓角半徑，調整數值來改變圓角大小 */
+            padding: 10px;            /* 內邊距 */
+            width: 200px;             /* 寬度 */
+            height: 150px;            /* 高度 */
+        }
+        .parent-area2{
+            display: flex;       /* 設置父元素為 flex 容器，讓子元素並排 */
+            gap: 30px;           /* 子元素間的間距（可選） */
         }
     </style>
 
@@ -120,8 +141,25 @@
                     <SortedDescendingHeaderStyle BackColor="#00547E" />
                 </asp:GridView>
            </div>
-           
+           <div id="rankingArea3" class="auto-style4" style="margin-top:10px">
+               <asp:TextBox ID="TextBox1" runat="server" MaxLength="10"></asp:TextBox>
+               <br>
+                <div id="SearchArea" class="rounded-box" style="display:none">
+                   <div class = "parent-area2" >                
+                        <asp:Label ID="Label1" runat="server" Text="Label" Width="150px"></asp:Label>
+
+                        <div>
+                            <asp:Button ID="Button4" runat="server" Text="X" OnClick="Button4_Click" />
+                        </div>
+                   </div>
+               </div>
+           </div>
+
+           <div id="rankingArea4" class="auto-style4" style="margin-top:10px">
+               <asp:Button ID="Button3" runat="server" Text="查詢" OnClick="Button3_Click" />
+           </div>
         </div>
+
         <div id="passwordInput" style="display:none" class="auto-style3">
             <label for="passwordField">請輸入密碼：</label>
             <input type="password" id="passwordField" style="border-radius: 5px">

@@ -38,6 +38,7 @@
                     </div>-->
                     <asp:Button ID="Button6" runat="server" OnClick="Button6_Click" Text="遊戲2" style="position:absolute; top: 130px; left: 300px; width: 99px; height: 47px;" />
                     <asp:Button ID="Button1" runat="server" Height="48px" OnClick="Button1_Click" Text="開始" style="margin-left: 190px; margin-top: 70px;" Width="92px"/>
+
                     <asp:Label ID="Label1" runat="server" Text="Label" style="position: absolute; top: -1px; right: 0; width: 48px; height: 29px;"></asp:Label>
                     <asp:Button ID="Button5" runat="server" OnClick="Button5_Click" Text="遊戲1" style="position:absolute; top: 130px; left: 80px; width: 99px; height: 47px;" />
                     <asp:Button ID="Button2" runat="server" Height="48px" OnClick="Button2_Click" Text="排行榜" style="margin-left: 190px; margin-top: 10px;" Width="92px"/>
@@ -151,7 +152,7 @@
                         if (box.y < parseInt(moveBox.style.top)) box.y += box.speedY;
                         else box.y -= box.speedY;
 
-                        // 檢查邊界碰撞
+                        //檢查邊界碰撞
                         if (box.x <= 0 || box.x >= moveArea.offsetWidth - 20) {
                             box.speedX *= -1; // 水平方向反轉
                         }
@@ -180,10 +181,9 @@
                     //        // 解析後端的 JSON 回應
                     //        var response = JSON.parse(xhr.responseText);
                     //        // 回應中的 d 屬性包含 WebMethod 回傳的資料
-                    //        console.log("後端回應:", response.d);
-                    //        alert("後端回應: " + response.d);
+                    //        console.log("後端回應: " + response.d);
                     //    } else {
-                    //        console.error("錯誤: 無法取得回應，狀態碼:", xhr.status);
+                    //        alert("錯誤: 無法取得回應");
                     //    }
                     //};
 
@@ -215,9 +215,7 @@
                                     document.getElementById('RecordArea').style.display = 'block';
                                     document.getElementById('RecordArea').focus();
                                 }, 1000);
-                                document.getElementById('<%= Button4.ClientID %>').addEventListener('click', function () {
-                                    sendToBackend(1);
-                                });
+                                sendToBackend(1);
                             }
                         }
                     });
@@ -230,9 +228,7 @@
                         setTimeout(function () {
                             document.getElementById('RecordArea').style.display = 'block';
                         }, 1000);
-                        document.getElementById('<%= Button4.ClientID %>').addEventListener('click', function () {
-                            sendToBackend(2);
-                        });
+                        sendToBackend(2);
                     }
                 }
                 function handleKeydown(event) {

@@ -7,10 +7,12 @@
 // </自動產生>
 //------------------------------------------------------------------------------
 
-namespace Project {
+namespace Project
+{
 
 
-    public partial class _Default {
+    public partial class _Default
+    {
 
         /// <summary>
         /// Button6 控制項。

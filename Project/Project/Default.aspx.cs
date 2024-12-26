@@ -21,7 +21,6 @@ namespace Project
 {
     public partial class _Default : Page
     {
-        static string playerScore = "";
         static string nickname = "";
         static bool dropWitoutNickName = false;
         static string GameValue = "";
@@ -74,7 +73,7 @@ namespace Project
         [WebMethod(EnableSession = true)]
         public static string SendLabelDataToBackend(string labelValue, string Game)
         {
-            playerScore = labelValue;
+            HttpContext.Current.Session["playerScore"] = labelValue;
             GameValue = Game;
             mylock = false;
 
@@ -84,9 +83,11 @@ namespace Project
         //Nickname sending button
         protected void Button4_Click(object sender, EventArgs e)
         {
-            nickname = TextBox1.Text;
 
             while(mylock){ };
+
+            string playerScore = Session["playerScore"].ToString();
+            nickname = TextBox1.Text;
 
             if (!dropWitoutNickName && nickname!="")
             {
@@ -202,5 +203,17 @@ namespace Project
         protected void Button7_Click(object sender,EventArgs e) {
             Response.Redirect("About");
         }
+        /*
+        protected void Timer1_Tick(object sender, EventArgs e)
+        {
+            // 讀取 Session 中存儲的計數
+            int currentValue = (int)(Session["Counter"] ?? 0);
+            currentValue++; // 每秒增加
+            Session["Counter"] = currentValue;
+
+            // 更新 Literal 控件的文本
+            Literal1.Text = "計數: " + currentValue.ToString();
+        }
+        */
     }
 }

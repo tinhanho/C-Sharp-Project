@@ -13,6 +13,7 @@
             height: 453px;
             margin-top: 5px;
             margin-bottom: 0px;
+            border-right: 1px solid black; 
             overflow: auto;
         }
         .auto-style2 {
@@ -27,11 +28,11 @@
         }
         .auto-style3 {
             position: relative;
-            left: 520px;
-            height: 47px;
-            margin-top: 2px;
+            left: 0px;
+            height: 50px;
+            margin-top: 5px;
             margin-bottom: 0px;
-            top: -455px;
+            top: 0px;
             width: 390px;
             overflow: auto;
         }
@@ -81,6 +82,11 @@
                 <asp:Button ID="Button1" runat="server" Text="回到首頁" Width="129px" OnClick="Button1_Click" />
       
            </div>      
+            <div id="passwordInput" style="display:none" class="auto-style3">
+                <label for="passwordField">請輸入密碼：</label>
+                <input type="password" id="passwordField" style="border-radius: 5px">
+                <button onclick="storePassword()" style="border-radius: 5px">確認</button>
+            </div>
            <!--
             <div id="buttonArea2" class="auto-style2"  style="margin-left:1000px">
                 <asp:Button ID="Button2" runat="server" CssClass="custom-button" Text="登入"/>
@@ -160,11 +166,7 @@
            </div>
         </div>
 
-        <div id="passwordInput" style="display:none" class="auto-style3">
-            <label for="passwordField">請輸入密碼：</label>
-            <input type="password" id="passwordField" style="border-radius: 5px">
-            <button onclick="storePassword()" style="border-radius: 5px">確認</button>
-        </div>
+
 
 
             <script type="text/javascript">

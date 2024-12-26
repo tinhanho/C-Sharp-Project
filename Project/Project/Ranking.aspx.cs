@@ -131,6 +131,7 @@ namespace Project
             else Label1.Text = TextBox1.Text + "沒有紀錄！";
             string script = @"
                     document.getElementById(""SearchArea"").style.display=""block"";
+                    window.location.hash = '#SearchArea';
                 ";
             ClientScript.RegisterStartupScript(this.GetType(), "SearchAreaScript", script, true);
         }
@@ -138,6 +139,7 @@ namespace Project
         {
             string script = @"
                     document.getElementById(""SearchArea"").style.display=""none"";
+                    window.location.hash = '#rankingArea4';
                 ";
             ClientScript.RegisterStartupScript(this.GetType(), "SearchAreaScript2", script, true);
 

@@ -59,7 +59,7 @@
             overflow: auto;
         }
         .rounded-box {
-            margin-top: 50px;
+            margin-top: 120px;
             border: 2px solid #000;  /* 邊框顏色 */
             border-radius: 15px;      /* 圓角半徑，調整數值來改變圓角大小 */
             padding: 10px;            /* 內邊距 */

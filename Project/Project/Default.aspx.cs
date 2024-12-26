@@ -21,11 +21,8 @@ namespace Project
 {
     public partial class _Default : Page
     {
-        static string nickname = "";
-        static bool dropWitoutNickName = false;
-        static string GameValue = "";
         static SqlConnection cn = new SqlConnection();
-        static bool mylock = true;
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -74,7 +71,6 @@ namespace Project
         }
         protected void Button3_Click(object sender, EventArgs e)
         {
-            dropWitoutNickName = true;
             Button7.Visible = true;
             Page_Load(sender, e);
         }
@@ -83,8 +79,7 @@ namespace Project
         public static string SendLabelDataToBackend(string labelValue, string Game)
         {
             HttpContext.Current.Session["playerScore"] = labelValue;
-            GameValue = Game;
-            mylock = false;
+            HttpContext.Current.Session["GameValue"] = Game;
 
             return "收到的數據是: " + labelValue;
         }
@@ -93,16 +88,14 @@ namespace Project
         protected void Button4_Click(object sender, EventArgs e)
         {
 
-            while(mylock){ };
-
             string playerScore = Session["playerScore"].ToString();
-            nickname = TextBox1.Text;
+            string nickname = TextBox1.Text;
 
-            if (!dropWitoutNickName && nickname!="")
+            if (nickname!="")
             {
                 Debug.WriteLine(nickname);
                 Debug.WriteLine(playerScore);
-                if(GameValue=="1"){
+                if(Session["GameValue"].ToString() == "1"){
                     string mycmd = @"
                         IF EXISTS (SELECT 1 FROM Game1 WHERE Name = @Name AND @Score > Score)
                         BEGIN
@@ -127,7 +120,7 @@ namespace Project
                     }
                     
                 }
-                else if(GameValue=="2"){
+                else if(Session["GameValue"].ToString() == "2"){
                     string mycmd = @"
                         IF EXISTS (SELECT 1 FROM Game2 WHERE Name = @Name AND @Score < Score)
                         BEGIN
@@ -151,10 +144,7 @@ namespace Project
                     
                 }
             }
-            mylock = true;
-            nickname = "";
-            playerScore = "";
-            dropWitoutNickName = false;
+
             Button7.Visible = true;
 
             Page_Load(sender, e);

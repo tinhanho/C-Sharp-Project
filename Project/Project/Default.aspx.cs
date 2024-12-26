@@ -29,7 +29,16 @@ namespace Project
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            try{
+            if (Request.Browser.IsMobileDevice)
+            {
+                Button1.Style["margin-left"] = "97px";
+                Button2.Style["margin-left"] = "97px";
+                Button7.Style["margin-left"] = "97px";
+                Button6.Style["margin-left"] = "100px";
+                Button6.Style["left"] = "0px";
+            }
+            try
+            {
                 cn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; " +
                 "AttachDbFilename = C:\\C-Sharp-Project\\Project\\Project\\App_Data\\Ranking.mdf;" +
                 "Integrated Security=True;";
@@ -49,7 +58,7 @@ namespace Project
         //開始
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Button5.Visible = true;
+            if(!Request.Browser.IsMobileDevice) Button5.Visible = true;
             Button6.Visible = true;
             Button1.Visible = false;
             Button2.Visible = false;

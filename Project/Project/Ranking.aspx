@@ -94,8 +94,8 @@
             -->
        </div>
 
-       <div class = "parent-area" >
-           <div id="rankingArea" class="auto-style1">
+       <div id="parentArea" class = "parent-area" >
+           <div id="rankingArea" class="auto-style1" style="display:block">
                <div style="position:relative; margin-top: 10px; margin-left: 10px">
                     <h3>遊戲一</h3>
                </div>
@@ -121,7 +121,7 @@
                     <SortedDescendingHeaderStyle BackColor="#00547E" />
                 </asp:GridView>
            </div>
-           <div id="rankingArea2" class="auto-style1">
+           <div id="rankingArea2" class="auto-style1" style="display:block">
                <div style="position:relative; margin-top: 10px; margin-left: 10px">
                     <h3>遊戲二</h3>
                </div>

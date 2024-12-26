@@ -19,6 +19,15 @@ namespace Project
         static SqlConnection cn;
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Request.Browser.IsMobileDevice)
+            {
+                string script = @"
+                    document.getElementById('parentArea').style.flexDirection='column';        
+                    document.getElementById('rankingArea3').style.height='10px';
+                ";
+                ClientScript.RegisterStartupScript(this.GetType(), "MobileDeviceAdjust", script, true);
+            }
+
             cn = new SqlConnection();
             cn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; " +
                 "AttachDbFilename = C:\\C-Sharp-Project\\Project\\Project\\App_Data\\Ranking.mdf;" +

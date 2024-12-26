@@ -29,14 +29,14 @@
         <asp:Button ID="Button1" runat="server" Height="34px" Text="回到首頁" Width="129px" OnClick="Button1_Click" />
 
         <div class="outer-style">
-            <div class="rounded-box">
+            <div id="rb1" class="rounded-box">
             <h5> 遊戲一：<br>
                 鬼抓人遊戲</h5>
                 <br>用鍵盤上下左右控制黑色方塊躲避出生的紅色方塊，<br>
                 碰到紅色方塊遊戲結束。
 
             </div>
-            <div class="rounded-box2">
+            <div id="rb2" class="rounded-box2">
             <h5> 遊戲二：<br>
                 打地鼠遊戲</h5>
                 <br>用鼠標點擊10秒內出生的所有紅色方塊，<br>

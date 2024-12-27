@@ -107,7 +107,7 @@ namespace Project
                         END";
 
                     SqlCommand cmd = new SqlCommand(mycmd, cn);
-                    cmd.Parameters.AddWithValue("@Name", nickname);
+                    cmd.Parameters.AddWithValue("@Name", nickname.Substring(0, 10));
                     cmd.Parameters.AddWithValue("@Score", playerScore);
 
 
@@ -168,10 +168,12 @@ namespace Project
                 s2 = setInterval(generateRedBox, 1000);
                 s3 = setInterval(CheckIsAlive, 5);
                 s4 = setInterval(updateTime, 100); // 每 1 秒執行一次
+                s5 = setInterval(NoDebugger, 100);
             ";
             ClientScript.RegisterStartupScript(this.GetType(), "GameStartScript", script, true);
         }
 
+        //遊戲二
         protected void Button6_Click(object sender,EventArgs e) {
             Button1.Visible = false;
             Button2.Visible = false;
@@ -195,24 +197,13 @@ namespace Project
                     CheckAllRedBoxIsClicked();
                     s3 = setInterval(CheckAllRedBoxIsClicked, 5);
                 }, 10000);        
-                ";
+                s5 = setInterval(NoDebugger, 100);             
+            ";
             ClientScript.RegisterStartupScript(this.GetType(), "GameStartScript", script, true);
         }
 
         protected void Button7_Click(object sender,EventArgs e) {
             Response.Redirect("About");
         }
-        /*
-        protected void Timer1_Tick(object sender, EventArgs e)
-        {
-            // 讀取 Session 中存儲的計數
-            int currentValue = (int)(Session["Counter"] ?? 0);
-            currentValue++; // 每秒增加
-            Session["Counter"] = currentValue;
-
-            // 更新 Literal 控件的文本
-            Literal1.Text = "計數: " + currentValue.ToString();
-        }
-        */
     }
 }

@@ -53,9 +53,10 @@
                            <asp:Button ID="Button3" runat="server" Height="48px" OnClick="Button3_Click" Text="離開" style="margin-left: 0px; margin-top: 260px;" Width="92px"/>
                 </div>
             </div>
-    
+
             <!-- 加載 JavaScript -->
             <script type="text/javascript">
+
 
                 var currentTime = 0;
                 function updateTime() {
@@ -206,6 +207,8 @@
                                 clearInterval(s2);
                                 clearInterval(s3);
                                 clearInterval(s4);
+                                clearInterval(s5);
+                                
                                 keysPressed["ArrowUp"] = false;
                                 keysPressed["ArrowDown"] = false;
                                 keysPressed["ArrowLeft"] = false;
@@ -225,6 +228,7 @@
                     if (remainingBoxes.length === 0) {
                         clearInterval(s3);
                         clearInterval(s4);
+                        clearInterval(s5);
                         setTimeout(function () {
                             document.getElementById('RecordArea').style.display = 'block';
                         }, 1000);
@@ -237,6 +241,19 @@
                 function handleKeyUp(event) {
                     keysPressed[event.key] = false; // 記錄按下的按鍵
                 }
+
+                function NoDebugger(event) {
+
+                    var startTime = performance.now();
+                    debugger;
+                    var endTime = performance.now();
+
+                    if (endTime - startTime > 100) {
+                        document.getElementById('<%= Button3.ClientID %>').click();
+                    }
+
+                }
+
             </script>
     </main>
 </asp:Content>

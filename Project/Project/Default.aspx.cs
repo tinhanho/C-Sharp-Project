@@ -39,11 +39,12 @@ namespace Project
                 cn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; " +
                 "AttachDbFilename = C:\\C-Sharp-Project\\Project\\Project\\App_Data\\Ranking.mdf;" +
                 "Integrated Security=True;";
-                cn.Open();  
+                cn.Open();
             }
-            catch{ 
+            catch
+            {
             }
-           
+
             Label1.Visible = false;
             Button1.Visible = true;
             Button2.Visible = true;
@@ -51,18 +52,18 @@ namespace Project
             Button5.Visible = false;
             Button6.Visible = false;
         }
-        
+
         //開始
         protected void Button1_Click(object sender, EventArgs e)
         {
-            if(!Request.Browser.IsMobileDevice) Button5.Visible = true;
+            if (!Request.Browser.IsMobileDevice) Button5.Visible = true;
             Button6.Visible = true;
             Button1.Visible = false;
             Button2.Visible = false;
             Button3.Visible = true;
             Button7.Visible = false;
         }
-        
+
         //Ranking
         protected void Button2_Click(object sender, EventArgs e)
         {
@@ -91,11 +92,12 @@ namespace Project
             string playerScore = Session["playerScore"].ToString();
             string nickname = TextBox1.Text;
 
-            if (nickname!="")
+            if (nickname != "")
             {
                 Debug.WriteLine(nickname);
                 Debug.WriteLine(playerScore);
-                if(Session["GameValue"].ToString() == "1"){
+                if (Session["GameValue"].ToString() == "1")
+                {
                     string mycmd = @"
                         IF EXISTS (SELECT 1 FROM Game1 WHERE Name = @Name AND @Score > Score)
                         BEGIN
@@ -107,20 +109,22 @@ namespace Project
                         END";
 
                     SqlCommand cmd = new SqlCommand(mycmd, cn);
-                    cmd.Parameters.AddWithValue("@Name", nickname.Substring(0, 10));
+                    cmd.Parameters.AddWithValue("@Name", nickname);
                     cmd.Parameters.AddWithValue("@Score", playerScore);
 
 
-                    try {
+                    try
+                    {
                         cmd.ExecuteNonQuery();
                     }
                     catch
                     {
                         Debug.Write("EXCEPTION");
                     }
-                    
+
                 }
-                else if(Session["GameValue"].ToString() == "2"){
+                else if (Session["GameValue"].ToString() == "2")
+                {
                     string mycmd = @"
                         IF EXISTS (SELECT 1 FROM Game2 WHERE Name = @Name AND @Score < Score)
                         BEGIN
@@ -140,8 +144,8 @@ namespace Project
                     catch
                     {
                         Debug.Write("EXCEPTION");
-                    }        
-                    
+                    }
+
                 }
             }
 
@@ -149,9 +153,10 @@ namespace Project
 
             Page_Load(sender, e);
         }
-        
+
         //遊戲1
-        protected void Button5_Click(object sender,EventArgs e) {
+        protected void Button5_Click(object sender, EventArgs e)
+        {
             Button1.Visible = false;
             Button2.Visible = false;
             Button3.Visible = true;
@@ -174,7 +179,8 @@ namespace Project
         }
 
         //遊戲二
-        protected void Button6_Click(object sender,EventArgs e) {
+        protected void Button6_Click(object sender, EventArgs e)
+        {
             Button1.Visible = false;
             Button2.Visible = false;
             Button3.Visible = true;
@@ -202,7 +208,8 @@ namespace Project
             ClientScript.RegisterStartupScript(this.GetType(), "GameStartScript", script, true);
         }
 
-        protected void Button7_Click(object sender,EventArgs e) {
+        protected void Button7_Click(object sender, EventArgs e)
+        {
             Response.Redirect("About");
         }
     }

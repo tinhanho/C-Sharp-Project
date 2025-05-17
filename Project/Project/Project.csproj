@@ -293,6 +293,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include=".well-known\acme-challenge\" />
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\" />
     <Folder Include="Models\" />
